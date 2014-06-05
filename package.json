@@ -1,0 +1,44 @@
+{
+  "name": "grunt-wdsync",
+  "description": "The best Grunt plugin ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/eric.clifford/grunt-webdav-sync",
+  "author": {
+    "name": "eclifford",
+    "email": "ericgclifford@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eric.clifford/grunt-webdav-sync.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eric.clifford/grunt-webdav-sync/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/eric.clifford/grunt-webdav-sync/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "async": "^0.9.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt-newer": "^0.7.0",
+    "request": "^2.36.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
