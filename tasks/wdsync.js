@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         grunt.verbose.writeln("Asset created: " + remoteURL);
         callback(null, remoteURL);
       }
-    }).setMaxListeners(12);
+    }).setMaxListeners(0);
   }
 
   grunt.registerMultiTask('wdsync', 'The best Grunt plugin ever.', function() {
@@ -66,10 +66,9 @@ module.exports = function(grunt) {
     // Iterate over all specified file groups.
     this.files.forEach(function(group) {
       group.src.forEach(function(file) {
-        console.log(file);
         filesToProcess.push({
           src: file,
-          dest: group.dest
+          dest: file.replace(options.strip, '')
         });
       })
     });
