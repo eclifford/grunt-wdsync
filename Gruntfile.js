@@ -32,7 +32,10 @@ module.exports = function(grunt) {
     webdav_sync: {
       default: {
         options: {
-          remote_path: 'http://admin:admin@localhost:4503'
+          remote_paths: [
+            'http://admin:admin@localhost:4502',
+            'http://admin:admin@localhost:4503'
+          ]
         },
         src: 'tmp/**/*'
       }

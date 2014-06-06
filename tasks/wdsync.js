@@ -44,10 +44,10 @@ module.exports = function(grunt) {
 
     request(options, function(error, res, body) {
       if(error) {
-        grunt.verbose.writeln("Error: " + error);
+        grunt.log.writeln("Error: " + error);
         callback({status: res.statusCode, message: error});
       } else {
-        grunt.verbose.writeln("Asset created: " + remoteURL);
+        grunt.log.writeln(verb.green + " " + remoteURL.cyan);
         callback(null, remoteURL);
       }
     }).setMaxListeners(0);
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     });
 
     var filesToProcess = [];
-    var remote_path = options.remote_path;
+    var remote_paths = options.remote_paths;
 
     // Iterate over all specified file groups.
     this.files.forEach(function(group) {
@@ -73,19 +73,42 @@ module.exports = function(grunt) {
       })
     });
 
+    // Verify we have files
+    if(filesToProcess.length === 0) {
+      grunt.verbose.writeln("No files found");
+      done();
+    }
+
     // Sort filenames by length
     filesToProcess.sort(function(a, b) {
       return a.dest.length - b.dest.length;
     });
 
-    async.each(filesToProcess, function(file, callback) {
-      var remoteURL = url.resolve(remote_path, file.dest);
+    // Verify that the remote host is available
+    async.each(remote_paths, function(remote_path, callback) {
+      request.get(remote_path, function(error) {
+        if(error) {
+          grunt.log.error("Unable to connect to remote host: " + remote_path)
+          callback();
+        } else {
+          async.each(filesToProcess, function(file, callback) {
+            var remoteURL = url.resolve(remote_path, file.dest);
 
-      if(grunt.file.isDir(file.src)) {
-        processHTTPRequest(remoteURL, 'MKCOL', null, callback);
-      } else {
-        processHTTPRequest(remoteURL, 'PUT', grunt.file.read(file.src), callback);
-      }
+            if(grunt.file.isDir(file.src)) {
+              processHTTPRequest(remoteURL, 'MKCOL', null, callback);
+            } else {
+              processHTTPRequest(remoteURL, 'PUT', grunt.file.read(file.src), callback);
+            }
+          }, function(err) {
+            if(err) {
+              grunt.log.error(err.message);
+              callback();
+            } else {
+              callback();
+            }
+          });
+        }
+      });
     }, function(err) {
       if(err) {
         grunt.log.error(err.message);
@@ -94,6 +117,7 @@ module.exports = function(grunt) {
         done();
       }
     });
+
   });
 
 };
