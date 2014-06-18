@@ -12,6 +12,7 @@ var url = require('url');
 var request = require('request');
 var async = require('async');
 var path = require('path');
+var fs = require('fs');
 
 module.exports = function(grunt) {
 
@@ -38,26 +39,12 @@ module.exports = function(grunt) {
     return options;
   }
 
-  var processHTTPRequest = function(remoteURL, verb, data, callback) {
-    var options = prepareHTTPOptions(remoteURL, verb);
-    options.body = data;
-
-    request(options, function(error, res, body) {
-      if(error) {
-        grunt.log.writeln("Error: " + error);
-        callback({status: res.statusCode, message: error});
-      } else {
-        grunt.log.writeln(verb.green + " " + remoteURL.cyan);
-        callback(null, remoteURL);
-      }
-    }).setMaxListeners(0);
-  }
-
   grunt.registerMultiTask('wdsync', 'The best Grunt plugin ever.', function() {
     var done = this.async();
 
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
+      encoding: 'utf8'
     });
 
     var filesToProcess = [];
@@ -95,9 +82,19 @@ module.exports = function(grunt) {
             var remoteURL = url.resolve(remote_path, file.dest);
 
             if(grunt.file.isDir(file.src)) {
-              processHTTPRequest(remoteURL, 'MKCOL', null, callback);
+              request({uri: remoteURL, method: 'MKCOL'}, function(error) {
+                if(error)
+                  grunt.log.writeln("Error: " + error);
+                else
+                  grunt.log.writeln("MKCOL".green + " " + remoteURL.cyan);
+              });
             } else {
-              processHTTPRequest(remoteURL, 'PUT', grunt.file.read(file.src), callback);
+              fs.createReadStream(file.src).pipe(request.put(remoteURL, function(error,message,response) {
+                if(error)
+                  grunt.log.writeln("Error: " + error);
+                else
+                  grunt.log.writeln("PUT".green + " " + remoteURL.cyan);
+              }));
             }
           }, function(err) {
             if(err) {
