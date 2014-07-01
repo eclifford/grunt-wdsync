@@ -82,11 +82,13 @@ module.exports = function(grunt) {
             var remoteURL = url.resolve(remote_path, file.dest);
 
             if(grunt.file.isDir(file.src)) {
-              request({uri: remoteURL, method: 'MKCOL'}, function(error) {
+              request({uri: remoteURL, method: 'MKCOL'}, function(error, res, body) {
                 if(error)
                   grunt.log.writeln("Error: " + error);
                 else
                   grunt.log.writeln("MKCOL".green + " " + remoteURL.cyan);
+
+                callback();
               });
             } else {
               fs.createReadStream(file.src).pipe(request.put(remoteURL, function(error,message,response) {
@@ -94,6 +96,8 @@ module.exports = function(grunt) {
                   grunt.log.writeln("Error: " + error);
                 else
                   grunt.log.writeln("PUT".green + " " + remoteURL.cyan);
+
+                callback();
               }));
             }
           }, function(err) {
