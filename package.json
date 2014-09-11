@@ -1,23 +1,23 @@
 {
   "name": "grunt-wdsync",
-  "description": "The best Grunt plugin ever.",
-  "version": "0.2.3",
-  "homepage": "https://github.com/eric.clifford/grunt-webdav-sync",
+  "description": "Grunt plugin for pushing files to WEBDAV",
+  "version": "0.2.4",
+  "homepage": "https://github.com/eclifford/grunt-wdsync",
   "author": {
     "name": "eclifford",
     "email": "ericgclifford@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/eric.clifford/grunt-webdav-sync.git"
+    "url": "git://github.com/eclifford/grunt-wdsync.git"
   },
   "bugs": {
-    "url": "https://github.com/eric.clifford/grunt-webdav-sync/issues"
+    "url": "https://github.com/eclifford/grunt-wdsync/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/eric.clifford/grunt-webdav-sync/blob/master/LICENSE-MIT"
+      "url": "https://github.com/eclifford/grunt-wdsync/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {

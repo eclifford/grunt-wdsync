@@ -1,6 +1,6 @@
 # grunt-wdsync
 
-> The best Grunt plugin ever.
+> Grunt plugin for publishing files to WEBDAV
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-webdav-sync --save-dev
+npm install grunt-wdsync --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-webdav-sync');
+grunt.loadNpmTasks('grunt-wdsync');
 ```
 
-## The "webdav_sync" task
+## The "wdsync" task
 
 ### Overview
-In your project's Gruntfile, add a section named `webdav_sync` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `wdsync` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  webdav_sync: {
+  wdsync: {
     options: {
       // Task-specific options go here.
     },
@@ -56,7 +56,7 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  webdav_sync: {
+  wdsync: {
     options: {},
     files: {
       'dest/default_options': ['src/testing', 'src/123'],
@@ -70,7 +70,7 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  webdav_sync: {
+  wdsync: {
     options: {
       separator: ': ',
       punctuation: ' !!!',
